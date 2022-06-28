@@ -7,6 +7,23 @@ const switcher = (state) => {
   };
 
   switch (state) {
+
+    case "MAIN_PAGE":
+      // code block
+      elementView.name = "main_page";
+      elementView.previousView = "MAIN_PAGE";
+      elementView.elements = [
+        elements.test1,
+        elements.test2,
+      ];
+      break;
+
+    default:
+      return switcher("MAIN_PAGE");
+
+    /// BELLOW IS NOT USED BUT WORKS AS EXAMPLE
+
+    /*
     case "MAIN_PAGE":
       // code block
       elementView.name = "main_page";
@@ -59,9 +76,11 @@ const switcher = (state) => {
     default:
       return switcher("MAIN_PAGE");
     // code block
+
+    */
   }
 
   return elementView;
 };
 
-module.exports = { switcher };
+export default switcher;

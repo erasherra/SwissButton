@@ -1,13 +1,14 @@
 //HERE YOU CAN CREATE WHAT EVER ACTION IS NEEDED
-import axios from "axios";
-//import { Redirect } from "react-router-dom";
-import Router from "next/router";
+//import axios from "axios";
+////import { Redirect } from "react-router-dom";
+//import Router from "next/router";
 
-import store from "../../../redux/meetingDataStore";
-import updateStore from "../../../redux/updateMeetingDataStore";
-import mainStore from "../../../redux/mainDataHolder";
+//import store from "../../../redux/meetingDataStore";
+//import updateStore from "../../../redux/updateMeetingDataStore";
+//import mainStore from "../../../redux/mainDataHolder";
 import { showMesage, showTimedMessage } from "./chat";
 
+/*
 const api = axios.create({
   baseURL:
     process.env.NODE_ENV === "development"
@@ -127,6 +128,8 @@ const test = (event) => {
   //store.subscribe(() => console.log(store.getState()));
 };
 
+
+
 export {
   createMeetingAndRedirect,
   updateMeetingAndRedirect,
@@ -134,4 +137,24 @@ export {
   test,
   interested,
   copyUrl,
+};
+*/
+
+const test1 = (event) => {
+  event.preventDefault();
+  showTimedMessage("test1!", 2000);
+  console.log("test1 event");
+  //store.subscribe(() => console.log(store.getState()));
+};
+
+const test2 = (event) => {
+  event.preventDefault();
+  showTimedMessage("TEST❤️!", 2000);
+  console.log("test2 event");
+  //store.subscribe(() => console.log(store.getState()));
+};
+
+export {
+  test1,
+  test2
 };

@@ -1,5 +1,6 @@
 import styles from "../mainButton.module.css";
-import Link from "next/link";
+//import Link from "next/link";
+/*
 import {
   createMeetingAndRedirect,
   updateMeetingAndRedirect,
@@ -8,9 +9,48 @@ import {
   interested,
   copyUrl,
 } from "../actions";
+*/
+
+import {
+  test1,
+  test2
+} from "../actions";
 
 let elements = {};
 
+
+elements.test1 = {
+  name: "test1",
+  element: (
+    <button
+      key="deleteMeeting"
+      type="submit"
+      className={`${styles.defaultButtons}`}
+      onClick={test1}
+    >
+      TEST 1
+    </button>
+  ),
+};
+
+elements.test2 = {
+  name: "test1",
+  element: (
+    <button
+      key="deleteMeeting"
+      type="submit"
+      className={`${styles.defaultButtons}`}
+      onClick={test2}
+    >
+      TEST 2
+    </button>
+  ),
+};
+
+export default elements;
+
+// BELLOW NOT USED BUT CAN STAY AS EXANPLE
+/*
 elements.linkToCreateMeetingPage = {
   name: "linkToCreateMeetingPage",
   group: "MAIN_PAGE",
@@ -39,7 +79,7 @@ elements.createButton = {
       key="createMeeting"
       type="submit"
       className={`${styles.defaultButtons} ${styles.accept}`}
-      onClick={createMeetingAndRedirect}
+      onClick={test}
     >
       CREATE
     </button>
@@ -73,7 +113,7 @@ elements.updateMeetingButton = {
       key="updateMeeting"
       type="submit"
       className={`${styles.defaultButtons} ${styles.accept}`}
-      onClick={updateMeetingAndRedirect}
+      onClick={test}
     >
       UPDATE
     </button>
@@ -87,7 +127,7 @@ elements.deleteMeetingButton = {
       key="deleteMeeting"
       type="submit"
       className={`${styles.defaultButtons} ${styles.delete}`}
-      onClick={deleteMeetingAndRedirectToMainPage}
+      onClick={test}
     >
       DELETE
     </button>
@@ -101,7 +141,7 @@ elements.interestedButton = {
       key="interested"
       type="submit"
       className={`${styles.defaultButtons} ${styles.interested}`}
-      onClick={interested}
+      onClick={test}
     >
       {"LIKE"}
     </button>
@@ -115,11 +155,12 @@ elements.copyUrlButton = {
       key="copy"
       type="submit"
       className={`${styles.defaultButtons}`}
-      onClick={copyUrl}
+      onClick={test}
     >
       SHARE
     </button>
   ),
 };
+*/
 
-module.exports = elements;
+

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { switcher } from "./stateController";
+import switcher from "./stateController";
 import buttonConfig from "./config";
 import styles from "./mainButton.module.css";
 import Draggable from "react-draggable";
@@ -113,4 +113,4 @@ const Elements = ({ current }) => {
   );
 };
 
-module.exports = mainButon;
+export default mainButon;
