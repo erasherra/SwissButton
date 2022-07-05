@@ -1,4 +1,5 @@
 import styles from "../mainButton.module.css";
+import { Link } from "react-router-dom";
 //import Link from "next/link";
 /*
 import {
@@ -23,7 +24,7 @@ elements.test1 = {
   name: "test1",
   element: (
     <button
-      key="deleteMeeting"
+      key="test1"
       type="submit"
       className={`${styles.defaultButtons}`}
       onClick={test1}
@@ -37,12 +38,30 @@ elements.test2 = {
   name: "test1",
   element: (
     <button
-      key="deleteMeeting"
+      key="test2"
       type="submit"
       className={`${styles.defaultButtons}`}
       onClick={test2}
     >
       TEST 2
+    </button>
+  ),
+};
+
+elements.page1 = {
+  name: "page1",
+  element: (
+    <button key="home" className={styles.defaultButtons}>
+    <Link to="/page1">PAGE 1</Link>
+    </button>
+  ),
+};
+
+elements.home = {
+  name: "home",
+  element: (
+    <button key="home" className={styles.defaultButtons}>
+    <Link to="/">HOME</Link>
     </button>
   ),
 };

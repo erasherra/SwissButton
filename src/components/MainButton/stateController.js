@@ -15,6 +15,8 @@ const switcher = (state) => {
       elementView.elements = [
         elements.test1,
         elements.test2,
+        elements.page1,
+        elements.home
       ];
       break;
 
