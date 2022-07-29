@@ -1,88 +1,64 @@
-import elements from "./elements";
+
+import styles from "./mainButton.module.css";
+import { Link } from "react-router-dom";
+
+let stateChanger = null;
+let objects = null; 
 
 const switcher = (state) => {
-  let elementView = {
-    elements: [],
-    previousView: null,
-  };
-
-  switch (state) {
-
-    case "MAIN_PAGE":
-      // code block
-      elementView.name = "main_page";
-      elementView.previousView = "MAIN_PAGE";
-      elementView.elements = [
-        elements.test1,
-        elements.test2,
-        elements.page1,
-        elements.home
-      ];
-      break;
-
-    default:
-      return switcher("MAIN_PAGE");
-
-    /// BELLOW IS NOT USED BUT WORKS AS EXAMPLE
-
-    /*
-    case "MAIN_PAGE":
-      // code block
-      elementView.name = "main_page";
-      elementView.previousView = "MAIN_PAGE";
-      elementView.elements = [
-        elements.linkToCreateMeetingPage,
-        elements.linkToJoinMeetingPage,
-      ];
-      break;
-    case "CREATE_MEETING":
-      elementView.name = "create_meeting_page";
-      elementView.previousView = "MAIN_PAGE";
-      elementView.elements = [
-        elements.createButton,
-        elements.linkBackToMainPage,
-      ];
-      // code block
-
-      break;
-    case "PRIVATE_MEETING":
-      elementView.name = "private_meeting_page";
-      elementView.previousView = "MAIN_PAGE";
-      elementView.elements = [
-        elements.linkBackToMeetings,
-        elements.copyUrlButton,
-        elements.interestedButton,
-      ];
-      // code block
-
-      break;
-
-    case "MEETINGS":
-      elementView.name = "meetings_page";
-      elementView.elements = [elements.linkBackToMainPage];
-      // code block
-
-      break;
-
-    case "ADMIN_MEETING":
-      elementView.name = "admin_meeting_page";
-      elementView.previousView = "MAIN_PAGE";
-      elementView.elements = [
-        elements.linkBackToMeetings,
-        elements.copyUrlButton,
-        elements.updateMeetingButton,
-        elements.deleteMeetingButton,
-      ];
-      break;
-
-    default:
-      return switcher("MAIN_PAGE");
-    // code block
-
-    */
-  }
-
-  return elementView;
+  
+  const objectList = objects.get(state);
+  console.log("DEBUGER", state)
+  const elements = objectList.map(obj => getElement(obj))
+  console.log(elements)
+  return (elements);
 };
 
-export default switcher;
+
+
+const getElement = (obj) => {
+
+  
+  if(!obj && !obj.type){
+    return null;
+  }
+
+  switch (obj.type) {
+    case "Link":
+      // code block
+      return (
+        <button key={obj.key} className={styles.defaultButtons}>
+          <Link to={obj.link}>{obj.text}</Link>
+        </button>
+      )
+
+      case "Button":
+        // code block
+        return (
+          <button key={obj.key} 
+          className={styles.defaultButtons}
+          onClick={obj.onClickAction}
+          >
+            {obj.text}
+          </button>
+        )
+
+    default:
+      return null;
+
+    }
+}
+
+
+
+const initializeStateController = (setHook, objectMatrix = [[]]) => {
+  stateChanger = setHook;
+  objects = new Map(objectMatrix);
+
+}
+
+const setButtonState = (newState) => {
+  stateChanger(newState)
+}
+
+export {switcher, initializeStateController, setButtonState};

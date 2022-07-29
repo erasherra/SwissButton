@@ -1,14 +1,14 @@
 import { useEffect, useState, setState, useRef } from "react";
-import switcher from "./stateController";
+import * as stateController from "./stateController";
 import buttonConfig from "./config";
 import styles from "./mainButton.module.css";
 import Draggable from "react-draggable";
 import * as chat from "./actions/chat";
 import * as positionUtil from "./utils/positionUtil";
 import useLongPress from "./utils/useLongPress";
+import logo from './assets/pop.gif';
 
-
-const mainButon = function MainButton({ buttonView = "ROOT", popup = ""}) {
+const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", popup = "", }) {
   //Hooks
 
   const [checked, setChecked] = useState(
@@ -19,8 +19,9 @@ const mainButon = function MainButton({ buttonView = "ROOT", popup = ""}) {
   const [pos_x, setPosition_X] = useState(buttonConfig.positionX.pos);
   const [pos_y, setPosition_Y] = useState(buttonConfig.positionY.pos);
   const [message, setMessage] = useState(popup);
+  const [buttonState, setButtonState] = useState(buttonView);
   
-
+  stateController.initializeStateController(setButtonState, elements);
   chat.initializeChat(setMessage);
 
   buttonConfig.buttonCheckedState.checked = checked;
@@ -47,29 +48,24 @@ const mainButon = function MainButton({ buttonView = "ROOT", popup = ""}) {
     window.localStorage.setItem(buttonConfig.positionY.name, pos_y);
   });
 
-  let currentElements = switcher(buttonView);
-
+  let currentElements = stateController.switcher(buttonState);
+  
   console.log("button psition x: " + pos_x + " y: " + pos_y);
   //Functions
   const toggleChecked = () => {
     if (!dragged) {
       setChecked((value) => !value);
-      console.log("clicked");
     } else {
       setIsDragged(false);
     }
   };
 
   const onStart = () => {
-    //setIsDragged(true);
-    //console.log("not stopped");
     setCanITeleport(false);
 
   };
 
   const onStop = (event, data) => {
-    //setIsDragged(false);
-    //console.log("stopped");
     
     setTimeout(setCanITeleport(true),500)
 
@@ -95,6 +91,11 @@ const mainButon = function MainButton({ buttonView = "ROOT", popup = ""}) {
 
     setPosition_X(e.screenX);
     setPosition_Y(e.screenY);
+    chat.showTimedMessage([
+    <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-40%", left: "-25%" }}/>,
+    <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-10%", left: "-10%" }}/>,
+    <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-100%", left: "-50%" }}/>
+    ],300)
   }
 
 
@@ -121,7 +122,7 @@ const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
     <div style={{ height: '100%', position: 'absolute', left: '0px', width: '100%', overflow: 'hidden'}} {...longPressEvent}>
     <div style={{ position: "fixed", zIndex: "5" }}>
 
-      
+    
       <DraggableElement nodeRef={nodeRef} 
       dragHandlers={dragHandlers} 
       checked={checked} 
@@ -129,14 +130,18 @@ const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
       toggleChecked={toggleChecked} 
       message={message} 
       pos_x={pos_x}
-      pos_y={pos_y} />
+      pos_y={pos_y} 
+      canITeleport={canITeleport}
+      logo={logo}
+      />
+      
       
     </div>
     </div>
   );
 };
 
-const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y}) => {
+const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y, canITeleport, logo}) => {
 
   console.log("DraggableElement ", pos_x, pos_y)
   return(
@@ -149,9 +154,15 @@ const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, togg
     positionOffset={pos_x && pos_y ? { x: -100, y: -200 } : null}
     //className={styles.MainButton}
   >
+    
+    
     <div ref={nodeRef} className={styles.MainButton}>
+    {
+    //canITeleport ? <img className="pop" src={logo} alt="loading..." style={{ zIndex: "6" }}/> : 
+    <>
       <div className={styles.defaultContainer}>
-        {checked ? <Elements current={currentElements} /> : null}
+        {checked ? <Elements elements={currentElements} /> : null}
+        
         <div className={styles.buttonsContainer}>
           <button
             className={styles.defaultButtons}
@@ -163,16 +174,19 @@ const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, togg
         </div>
       </div>
       <p className={styles.messageContainer}>{message}</p>
+    </>
+    }
     </div>
   </Draggable>
   );
 }
 
-const Elements = ({ current }) => {
+const Elements = ({ elements }) => {
+  console.log(elements)
   return (
     <div id="buttons" className={styles.showButtons}>
-      {current.elements.map((element) => {
-        return element.element;
+      {elements.map((element) => {
+        return element;
       })}
     </div>
   );

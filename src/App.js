@@ -8,6 +8,48 @@ import MainButton from "./components/MainButton";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
+
+
+
+  const myButton = [
+    [
+      "ROOT",
+      [
+        {
+          key: "asd",
+          type: "Button",
+          text: "ACTION",
+          onClickAction: function asd() {
+            console.log("asd");
+          },
+          link: null,
+          color: "none",
+          textColor: "none",
+        },
+        {
+          key: "asd2",
+          type: "Link",
+          text: "PAGE1",
+          onClickAction: null,
+          link: "/Page1",
+          color: "1",
+          textColor: "none",
+        }
+      ],
+    ],
+    [
+      "state2",
+      [
+        {
+          key: "asd3",
+          type: "Link",
+          text: "HOME",
+          link: "/",
+        }
+      ],
+    ],
+  ]
+
   return (
     <BrowserRouter>
       <Routes>
@@ -17,7 +59,7 @@ function App() {
         <Route path="*" element={<NoPage />} />
       </Routes>
       <div className="App" >
-        <MainButton/>
+        <MainButton elements={myButton} />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <a
