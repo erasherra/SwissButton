@@ -5,11 +5,20 @@ import Page2 from "./pages/Page2";
 import NoPage from "./pages/NoPage";
 import Home from "./pages/Home";
 import MainButton from "./components/MainButton";
+import { showMesage, showTimedMessage } from "./components/MainButton/actions/chat";
+import { heartEye } from "./components/MainButton/actions/feelings";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
 
-
+  
+  const test1 = (event) => {
+    event.preventDefault();
+    showTimedMessage("❤️!", 2000);
+    console.log("test2 event");
+    heartEye();
+    
+  };
 
   const myButton = [
     [
@@ -19,9 +28,7 @@ function App() {
           key: "asd",
           type: "Button",
           text: "ACTION",
-          onClickAction: function asd() {
-            console.log("asd");
-          },
+          onClickAction: test1,
           link: null,
           color: "none",
           textColor: "none",
@@ -49,6 +56,7 @@ function App() {
       ],
     ],
   ]
+  
 
   return (
     <BrowserRouter>

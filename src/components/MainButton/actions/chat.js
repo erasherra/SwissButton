@@ -1,4 +1,5 @@
 let setter = null;
+
 const initializeChat = (intiSetter) => {
   setter = intiSetter;
 };

@@ -7,6 +7,7 @@ import * as chat from "./actions/chat";
 import * as positionUtil from "./utils/positionUtil";
 import useLongPress from "./utils/useLongPress";
 import logo from './assets/pop.gif';
+import * as feelings from "./actions/feelings";
 
 const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", popup = "", }) {
   //Hooks
@@ -20,9 +21,12 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
   const [pos_y, setPosition_Y] = useState(buttonConfig.positionY.pos);
   const [message, setMessage] = useState(popup);
   const [buttonState, setButtonState] = useState(buttonView);
-  
+  const [feeling, setFeeling] = useState(null);
+
+
   stateController.initializeStateController(setButtonState, elements);
   chat.initializeChat(setMessage);
+  feelings.initialize(setFeeling);
 
   buttonConfig.buttonCheckedState.checked = checked;
   buttonConfig.positionX.pos = pos_x;
@@ -133,6 +137,7 @@ const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
       pos_y={pos_y} 
       canITeleport={canITeleport}
       logo={logo}
+      feeling={feeling}
       />
       
       
@@ -141,9 +146,15 @@ const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
   );
 };
 
-const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y, canITeleport, logo}) => {
+const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y, canITeleport, logo, feeling}) => {
+
 
   console.log("DraggableElement ", pos_x, pos_y)
+  if(!checked){
+    feelings.sleep();
+  }else if ( feeling === " 😴 "){
+    feelings.smile();
+  }
   return(
 
     <Draggable
@@ -169,7 +180,7 @@ const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, togg
             checked={checked}
             onClick={toggleChecked}
           >
-            {checked ? " 😁 " : " 😴 "}
+            {feeling}
           </button>
         </div>
       </div>
