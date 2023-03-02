@@ -8,7 +8,7 @@ let objects = null;
 const switcher = (state) => {
   
   const objectList = objects.get(state);
-  console.log("DEBUGER", state)
+  console.log("STATE:", state)
   const elements = objectList.map(obj => getElement(obj))
   console.log(elements)
   return (elements);

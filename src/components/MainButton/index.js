@@ -91,10 +91,10 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
   const dragHandlers = { onDrag: onDrag, onStart: onStart, onStop: onStop };
   
   const teleport = (e) =>{
-    console.log("DOUBLE TAB")
-
-    setPosition_X(e.screenX);
-    setPosition_Y(e.screenY);
+    //console.log(e)
+    setPosition_X(e.pageX);
+    setPosition_Y(e.pageY);
+    setChecked(false);
     chat.showTimedMessage([
     <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-40%", left: "-25%" }}/>,
     <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-10%", left: "-10%" }}/>,
@@ -149,7 +149,7 @@ const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
 const DraggableElement = ({nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y, canITeleport, logo, feeling}) => {
 
 
-  console.log("DraggableElement ", pos_x, pos_y)
+  //console.log("DraggableElement ", pos_x, pos_y)
   if(!checked){
     feelings.sleep();
   }else if ( feeling === " 😴 "){
