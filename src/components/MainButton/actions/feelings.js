@@ -44,4 +44,46 @@ const ring = async () => {
   setter(" 💍 ");
 };
 
-export { initialize, textForTime, setText, smile, cry, sleep, money, ring, heartEye, heart };
+const readyToJump = async () => {
+  setter(" 😣 ")
+}
+
+const disy = async () => {
+  setter(" 😵 ")
+}
+
+const getSleepValue = () => {
+  return " 😴 ";
+};
+
+const getSmileValue = () => {
+  return " 😁 ";
+};
+
+const getReadyToJumpValue = () => {
+  return " 😣 ";
+};
+
+const getDisyValue = () => {
+  return " 😵 ";
+};
+
+
+export {
+  initialize,
+  textForTime,
+  setText,
+  smile,
+  cry,
+  sleep,
+  money,
+  ring,
+  heartEye,
+  heart,
+  readyToJump,
+  disy,
+  getSleepValue,
+  getReadyToJumpValue,
+  getDisyValue,
+  getSmileValue
+};

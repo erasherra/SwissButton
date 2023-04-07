@@ -66,8 +66,9 @@ function App() {
         <Route path="page2" element={<Page2 />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
+      <MainButton elements={myButton} />
       <div className="App" >
-        <MainButton elements={myButton} />
+      
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <a
@@ -76,9 +77,14 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           ></a>
+
         </header>
-        <div className="routes"></div>
+        
+        <div className="routes">
+        
+        </div>
       </div>
+      
     </BrowserRouter>
   );
 }

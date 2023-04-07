@@ -1,0 +1,93 @@
+.MainButton {
+    z-index: "2";
+
+  }
+
+  .defaultContainer {
+    color: white;
+    background-color: #673ab7;
+
+    /*
+    display: inline-block;
+
+    or
+
+     float:left
+     
+    or
+
+     */
+    position:absolute; 
+    bottom:10px; 
+    right:5px;
+    
+    width: 90%;
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 12px 12px 5px 5px rgba(0, 0, 0, 0.2);
+  
+    /*transition: width 0.5s;*/
+  }
+
+  .showButtons {
+    color: white;
+    font-weight: bold;
+    background-color: #673ab7;
+    
+    /*
+    display: inline-block;
+    */
+
+    float: right; /*right*/
+    border: none;
+  }
+  
+  .hardCodedButtonsContainer {
+    /*display: inline-block;*/
+    cursor: "pointer";
+    /*background-color: #12032b;*/
+    float: left; /*left*/
+    
+  }
+  .defaultIconButton{
+    color: white;
+    font-weight: bold;
+    background-color: #673ab7;
+    display: inline-block;
+    margin: 5px;
+    padding: 20px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  .accept {
+    background-color: #62b73a;
+  }
+  
+  .delete {
+    background-color: #b73a3a;
+  }
+  
+  .interested {
+    background-color: #b73a98;
+  }
+  
+  .defaultButtons:hover {
+    opacity: 0.7;
+  }
+
+  .defaultIconButton:hover {
+    opacity: 0.7;
+  }
+  
+  .messageContainer {
+    float: top;
+    margin: 5px;
+    padding: 5px;
+  }
+
+  

@@ -1,6 +1,8 @@
 import { useCallback, useRef, useState } from "react";
 
 const useLongPress = (
+    leavePress,
+    onPress,
     onLongPress,
     onClick,
     { shouldPreventDefault = true, delay = 300 } = {}
@@ -25,6 +27,20 @@ const useLongPress = (
         [onLongPress, delay, shouldPreventDefault]
     );
 
+    const press = useCallback(
+        event => {
+            onPress(event)
+        },
+        [onPress, delay, shouldPreventDefault]
+    );
+
+    const onLeavePress = useCallback(
+        event => {
+            leavePress(event)
+        },
+        [onPress, delay, shouldPreventDefault]
+    );
+
     const clear = useCallback(
         (event, shouldTriggerClick = true) => {
             timeout.current && clearTimeout(timeout.current);
@@ -38,11 +54,11 @@ const useLongPress = (
     );
 
     return {
-        onMouseDown: e => start(e),
-        onTouchStart: e => start(e),
-        onMouseUp: e => clear(e),
-        onMouseLeave: e => clear(e, false),
-        onTouchEnd: e => clear(e)
+        onMouseDown: e => {start(e); press();},
+        onTouchStart: e => {start(e); press();},
+        onMouseUp: e => {clear(e); onLeavePress(e)},
+        onMouseLeave: e => {clear(e, false); onLeavePress(e)},
+        onTouchEnd: e => {clear(e); onLeavePress(e)}
     };
 };
 

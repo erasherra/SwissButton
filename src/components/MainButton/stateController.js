@@ -3,14 +3,14 @@ import styles from "./mainButton.module.css";
 import { Link } from "react-router-dom";
 
 let stateChanger = null;
-let objects = null; 
+let objects = null;
 
 const switcher = (state) => {
-  
+
   const objectList = objects.get(state);
-  console.log("STATE:", state)
+  //console.log("STATE:", state)
   const elements = objectList.map(obj => getElement(obj))
-  console.log(elements)
+  //console.log(elements)
   return (elements);
 };
 
@@ -18,8 +18,8 @@ const switcher = (state) => {
 
 const getElement = (obj) => {
 
-  
-  if(!obj && !obj.type){
+
+  if (!obj && !obj.type) {
     return null;
   }
 
@@ -32,21 +32,21 @@ const getElement = (obj) => {
         </button>
       )
 
-      case "Button":
-        // code block
-        return (
-          <button key={obj.key} 
+    case "Button":
+      // code block
+      return (
+        <button key={obj.key}
           className={styles.defaultButtons}
           onClick={obj.onClickAction}
-          >
-            {obj.text}
-          </button>
-        )
+        >
+          {obj.text}
+        </button>
+      )
 
     default:
       return null;
 
-    }
+  }
 }
 
 
@@ -61,4 +61,4 @@ const setButtonState = (newState) => {
   stateChanger(newState)
 }
 
-export {switcher, initializeStateController, setButtonState};
+export { switcher, initializeStateController, setButtonState };
