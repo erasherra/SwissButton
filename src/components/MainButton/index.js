@@ -1,7 +1,9 @@
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState, setState, useRef } from "react";
 import * as stateController from "./stateController";
 import buttonConfig from "./config";
-import styles from "./mainButton.module.css";
+//import styles from "./mainButton.module.css";
+import * as styles from './styles/main';
 import Draggable from "react-draggable";
 import * as chat from "./actions/chat";
 import * as positionUtil from "./utils/positionUtil";
@@ -9,6 +11,7 @@ import useLongPress from "./utils/useLongPress";
 import logo from './assets/pop.gif';
 import * as feelings from "./actions/feelings";
 import BottomSideButton from "./BottomSideButton";
+
 
 const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", popup = "", }) {
   //Hooks
@@ -227,17 +230,43 @@ const DraggableElement = ({ nodeRef, dragHandlers, checked, currentElements, tog
     //className={styles.MainButton}
     >
 
-
+      {/**
+      LEGACY STYLE 
       <div ref={nodeRef} className={styles.MainButton}>
+      {
+        //canITeleport ? <img className="pop" src={logo} alt="loading..." style={{ zIndex: "6" }}/> : 
+        <>
+          <div className={styles.defaultContainer}>
+            {checked ? <Elements elements={currentElements} /> : null}
+
+            <div className={styles.hardCodedButtonsContainer}>
+              <button
+                className={styles.defaultIconButton}
+                checked={checked}
+                onClick={toggleChecked}
+              >
+                {feeling}
+              </button>
+            </div>
+          </div>
+          <p className={styles.messageContainer}>{message}</p>
+        </>
+      }
+    </div>
+
+    */}
+
+
+      <div ref={nodeRef} css={styles.MainButton}>
         {
           //canITeleport ? <img className="pop" src={logo} alt="loading..." style={{ zIndex: "6" }}/> : 
           <>
-            <div className={styles.defaultContainer}>
+            <div css={styles.DefaultContainer}>
               {checked ? <Elements elements={currentElements} /> : null}
 
-              <div className={styles.hardCodedButtonsContainer}>
+              <div css={styles.HardCodedButtonsContainer}>
                 <button
-                  className={styles.defaultIconButton}
+                  css={styles.DefaultIconButton}
                   checked={checked}
                   onClick={toggleChecked}
                 >
@@ -245,7 +274,7 @@ const DraggableElement = ({ nodeRef, dragHandlers, checked, currentElements, tog
                 </button>
               </div>
             </div>
-            <p className={styles.messageContainer}>{message}</p>
+            <p css={styles.MessageContainer}>{message}</p>
           </>
         }
       </div>
@@ -256,7 +285,8 @@ const DraggableElement = ({ nodeRef, dragHandlers, checked, currentElements, tog
 const Elements = ({ elements }) => {
   //console.log(elements)
   return (
-    <div id="buttons" className={styles.showButtons}>
+    // <div id="buttons" className={styles.showButtons}> LEGACY STYLE
+    <div id="buttons" css={styles.ShowButtons}>
       {elements.map((element) => {
         return element;
       })}

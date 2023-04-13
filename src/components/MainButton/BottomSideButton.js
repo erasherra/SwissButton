@@ -1,26 +1,27 @@
-import styles from "./bottomSide.module.css";
-
+/** @jsxImportSource @emotion/react */
+//import styles from "./bottomSide.module.css";
+import * as styles from './styles/mobile';
 
 const BottomSideButton = ({ elements, nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y, canITeleport, logo, feeling }) => {
 
   return (
 
-    <div ref={nodeRef} className={styles.MainButton}>
+    <div ref={nodeRef} css={styles.MainButton}>
       {
         //canITeleport ? <img className="pop" src={logo} alt="loading..." style={{ zIndex: "6" }}/> : 
         <>
-          <p className={styles.messageContainer}>{message}</p>
+          <p css={styles.MessageContainer}>{message}</p>
 
-          <div className={styles.defaultContainer}>
-            <div id="buttons" className={styles.showButtons}>
+          <div css={styles.DefaultContainer}>
+            <div id="buttons" css={styles.ShowButtons}>
               {elements.map((element) => {
                 return element;
               })}
             </div>
 
-            <div className={styles.hardCodedButtonsContainer}>
+            <div css={styles.HardCodedButtonsContainer}>
               <button
-                className={styles.defaultIconButton}
+                css={styles.DefaultIconButton}
                 checked={checked}
                 onClick={toggleChecked}
               >

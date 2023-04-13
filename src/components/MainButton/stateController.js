@@ -1,5 +1,7 @@
 
-import styles from "./mainButton.module.css";
+/** @jsxImportSource @emotion/react */
+//import styles from "./mainButton.module.css";
+import * as styles from './styles/main';
 import { Link } from "react-router-dom";
 
 let stateChanger = null;
@@ -27,7 +29,11 @@ const getElement = (obj) => {
     case "Link":
       // code block
       return (
-        <button key={obj.key} className={styles.defaultButtons}>
+        <button 
+          key={obj.key} 
+          /*className={styles.defaultButtons}*/
+          css={styles.DefaultButtons}
+        >
           <Link to={obj.link}>{obj.text}</Link>
         </button>
       )
@@ -35,9 +41,11 @@ const getElement = (obj) => {
     case "Button":
       // code block
       return (
-        <button key={obj.key}
-          className={styles.defaultButtons}
+        <button 
+          key={obj.key}
           onClick={obj.onClickAction}
+          /*className={styles.defaultButtons}*/
+          css={styles.DefaultButtons}
         >
           {obj.text}
         </button>
