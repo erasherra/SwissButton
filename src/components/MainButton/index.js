@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState, setState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as stateController from "./stateController";
 import buttonConfig from "./config";
 //import styles from "./mainButton.module.css";
@@ -7,13 +7,13 @@ import * as styles from './styles/main';
 import Draggable from "react-draggable";
 import * as chat from "./actions/chat";
 import * as positionUtil from "./utils/positionUtil";
-import useLongPress from "./utils/useLongPress";
-import logo from './assets/pop.gif';
+import { useLongPress } from "./utils/useLongPress";
+
 import * as feelings from "./actions/feelings";
-import BottomSideButton from "./BottomSideButton";
+import { BottomSideButton } from "./BottomSideButton";
 
 
-const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", popup = "", }) {
+const MainButton = function MainButton({ buttonState = null, setButtonState = null, elements = [[]], buttonView = "ROOT", popup = "", teleportEffect = null }) {
   //Hooks
   const [width, setWidth] = useState(window.innerWidth);
   const [checked, setChecked] = useState(
@@ -24,9 +24,10 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
   const [pos_x, setPosition_X] = useState(buttonConfig.positionX.pos);
   const [pos_y, setPosition_Y] = useState(buttonConfig.positionY.pos);
   const [message, setMessage] = useState(popup);
-  const [buttonState, setButtonState] = useState(buttonView);
+  // const [buttonState, setButtonState] = useState(buttonView);
   const [feeling, setFeeling] = useState(null);
 
+  const teleporteffect = teleportEffect;
 
   stateController.initializeStateController(setButtonState, elements);
   chat.initializeChat(setMessage);
@@ -56,7 +57,7 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
     window.localStorage.setItem(buttonConfig.positionY.name, pos_y);
   });
 
-  
+
 
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
@@ -89,7 +90,7 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
   };
 
   const onStop = (event, data) => {
-    
+
     setTimeout(setCanITeleport(true), 500)
 
     if (data) {
@@ -100,7 +101,7 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
       teleport(event);
       setTimeout(feelings.sleep, 3000);
     }
-    
+
 
   };
 
@@ -123,17 +124,19 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
       setPosition_Y(e.pageY);
     }
     setChecked(false);
-    chat.showTimedMessage([
-      <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-40%", left: "-25%" }} />,
-      <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-10%", left: "-10%" }} />,
-      <img fill='red' className="pop" src={logo} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "-100%", left: "-50%" }} />
-    ], 300)
+
+    if (teleporteffect) {
+      chat.showTimedMessage([
+
+        <img fill='red' className="pop" src={teleporteffect} alt="loading..." style={{ position: "fixed", zIndex: "6", top: "0%", left: "0%" }} />
+      ], 300)
+    }
   }
 
-  
+
   const onLongPress = (e) => {
     console.log('longpress is triggered');
-    
+
     if (canITeleport) {
       onStop(e);
     }
@@ -145,13 +148,13 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
   }
 
   const onPress = (e) => {
-    if(feeling === feelings.getSleepValue()){
+    if (feeling === feelings.getSleepValue()) {
       feelings.readyToJump();
     }
   }
 
   const leavePress = (e) => {
-    if(feeling === feelings.getReadyToJumpValue()){
+    if (feeling === feelings.getReadyToJumpValue()) {
       feelings.sleep();
     }
   }
@@ -177,7 +180,7 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
             pos_x={pos_x}
             pos_y={pos_y}
             canITeleport={canITeleport}
-            logo={logo}
+            teleporteffect={teleporteffect}
             feeling={feelings.getSmileValue()} />
         </div>
         :
@@ -194,7 +197,7 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
               pos_x={pos_x}
               pos_y={pos_y}
               canITeleport={canITeleport}
-              logo={logo}
+              teleporteffect={teleporteffect}
               feeling={feeling}
             />
 
@@ -207,13 +210,13 @@ const mainButon = function MainButton({ elements = [[]], buttonView = "ROOT", po
   );
 };
 
-const DraggableElement = ({ nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y, canITeleport, logo, feeling }) => {
+const DraggableElement = ({ nodeRef, dragHandlers, checked, currentElements, toggleChecked, message, pos_x, pos_y, canITeleport, teleporteffect, feeling }) => {
 
 
   //console.log("DraggableElement ", pos_x, pos_y)
-  if (!checked ) {
+  if (!checked) {
     console.log("DEBUG")
-    if(feeling === null || feeling === feelings.getSmileValue()){
+    if (feeling === null || feeling === feelings.getSmileValue()) {
       feelings.sleep()
     }
   } else if (checked && feeling === feelings.getSleepValue()) {
@@ -234,7 +237,7 @@ const DraggableElement = ({ nodeRef, dragHandlers, checked, currentElements, tog
       LEGACY STYLE 
       <div ref={nodeRef} className={styles.MainButton}>
       {
-        //canITeleport ? <img className="pop" src={logo} alt="loading..." style={{ zIndex: "6" }}/> : 
+        //canITeleport ? <img className="pop" src={teleporteffect} alt="loading..." style={{ zIndex: "6" }}/> : 
         <>
           <div className={styles.defaultContainer}>
             {checked ? <Elements elements={currentElements} /> : null}
@@ -259,7 +262,7 @@ const DraggableElement = ({ nodeRef, dragHandlers, checked, currentElements, tog
 
       <div ref={nodeRef} css={styles.MainButton}>
         {
-          //canITeleport ? <img className="pop" src={logo} alt="loading..." style={{ zIndex: "6" }}/> : 
+          //canITeleport ? <img className="pop" src={teleporteffect} alt="loading..." style={{ zIndex: "6" }}/> : 
           <>
             <div css={styles.DefaultContainer}>
               {checked ? <Elements elements={currentElements} /> : null}
@@ -294,4 +297,4 @@ const Elements = ({ elements }) => {
   );
 };
 
-export default mainButon;
+export { MainButton };

@@ -1,13 +1,16 @@
+import React, { useEffect, useState, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Page1 from "./pages/Page1";
 import Page2 from "./pages/Page2";
 import NoPage from "./pages/NoPage";
 import Home from "./pages/Home";
-import MainButton from "./components/MainButton";
+import {MainButton} from "./components/MainButton";
+//import {MainButton} from "swiss-button";
 import { showMesage, showTimedMessage } from "./components/MainButton/actions/chat";
 import { heartEye } from "./components/MainButton/actions/feelings";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import explotion from './assets/pop.gif';
 
 function App() {
 
@@ -57,6 +60,7 @@ function App() {
     ],
   ]
   
+  const [buttonState, setButtonState] = useState("ROOT");
 
   return (
     <BrowserRouter>
@@ -66,7 +70,7 @@ function App() {
         <Route path="page2" element={<Page2 />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
-      <MainButton elements={myButton} />
+      <MainButton buttonState={buttonState} setButtonState={setButtonState} elements={myButton} popup="Wake me!" teleportEffect={true ? explotion : null}/>
       <div className="App" >
       
         <header className="App-header">

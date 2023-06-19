@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.useLongPress = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 var _react = require("react");
 const useLongPress = function useLongPress(leavePress, onPress, onLongPress, onClick) {
@@ -64,6 +64,7 @@ const useLongPress = function useLongPress(leavePress, onPress, onLongPress, onC
     }
   };
 };
+exports.useLongPress = useLongPress;
 const isTouchEvent = event => {
   return "touches" in event;
 };
@@ -73,5 +74,3 @@ const preventDefault = event => {
     event.preventDefault();
   }
 };
-var _default = useLongPress;
-exports.default = _default;

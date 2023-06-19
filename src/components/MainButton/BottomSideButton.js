@@ -37,4 +37,4 @@ const BottomSideButton = ({ elements, nodeRef, dragHandlers, checked, currentEle
   );
 };
 
-export default BottomSideButton;
+export {BottomSideButton};

@@ -1,32 +1,39 @@
 "use strict";
 
-require("core-js/modules/es.object.assign.js");
+require("core-js/modules/es.symbol.description.js");
 require("core-js/modules/es.weak-map.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.MainButton = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 var stateController = _interopRequireWildcard(require("./stateController"));
 var _config = _interopRequireDefault(require("./config"));
-var _mainButtonModule = _interopRequireDefault(require("./mainButton.module.css"));
+var styles = _interopRequireWildcard(require("./styles/main"));
 var _reactDraggable = _interopRequireDefault(require("react-draggable"));
 var chat = _interopRequireWildcard(require("./actions/chat"));
 var positionUtil = _interopRequireWildcard(require("./utils/positionUtil"));
-var _useLongPress = _interopRequireDefault(require("./utils/useLongPress"));
-var _pop = _interopRequireDefault(require("./assets/pop.gif"));
+var _useLongPress = require("./utils/useLongPress");
 var feelings = _interopRequireWildcard(require("./actions/feelings"));
-var _BottomSideButton = _interopRequireDefault(require("./BottomSideButton"));
+var _BottomSideButton = require("./BottomSideButton");
+var _jsxRuntime = require("@emotion/react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-const mainButon = function MainButton(_ref) {
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); } /** @jsxImportSource @emotion/react */ //import styles from "./mainButton.module.css";
+const MainButton = function MainButton(_ref) {
   let {
+    buttonState = null,
+    setButtonState = null,
     elements = [[]],
     buttonView = "ROOT",
-    popup = ""
+    popup = "",
+    teleportEffect = null
   } = _ref;
   //Hooks
   const [width, setWidth] = (0, _react.useState)(window.innerWidth);
@@ -36,8 +43,9 @@ const mainButon = function MainButton(_ref) {
   const [pos_x, setPosition_X] = (0, _react.useState)(_config.default.positionX.pos);
   const [pos_y, setPosition_Y] = (0, _react.useState)(_config.default.positionY.pos);
   const [message, setMessage] = (0, _react.useState)(popup);
-  const [buttonState, setButtonState] = (0, _react.useState)(buttonView);
+  // const [buttonState, setButtonState] = useState(buttonView);
   const [feeling, setFeeling] = (0, _react.useState)(null);
+  const teleporteffect = teleportEffect;
   stateController.initializeStateController(setButtonState, elements);
   chat.initializeChat(setMessage);
   feelings.initialize(setFeeling);
@@ -111,40 +119,20 @@ const mainButon = function MainButton(_ref) {
       setPosition_Y(e.pageY);
     }
     setChecked(false);
-    chat.showTimedMessage([/*#__PURE__*/React.createElement("img", {
-      fill: "red",
-      className: "pop",
-      src: _pop.default,
-      alt: "loading...",
-      style: {
-        position: "fixed",
-        zIndex: "6",
-        top: "-40%",
-        left: "-25%"
-      }
-    }), /*#__PURE__*/React.createElement("img", {
-      fill: "red",
-      className: "pop",
-      src: _pop.default,
-      alt: "loading...",
-      style: {
-        position: "fixed",
-        zIndex: "6",
-        top: "-10%",
-        left: "-10%"
-      }
-    }), /*#__PURE__*/React.createElement("img", {
-      fill: "red",
-      className: "pop",
-      src: _pop.default,
-      alt: "loading...",
-      style: {
-        position: "fixed",
-        zIndex: "6",
-        top: "-100%",
-        left: "-50%"
-      }
-    })], 300);
+    if (teleporteffect) {
+      chat.showTimedMessage([(0, _jsxRuntime.jsx)("img", {
+        fill: "red",
+        className: "pop",
+        src: teleporteffect,
+        alt: "loading...",
+        style: {
+          position: "fixed",
+          zIndex: "6",
+          top: "0%",
+          left: "0%"
+        }
+      })], 300);
+    }
   };
   const onLongPress = e => {
     console.log('longpress is triggered');
@@ -169,55 +157,62 @@ const mainButon = function MainButton(_ref) {
     shouldPreventDefault: true,
     delay: 1500
   };
-  const longPressEvent = (0, _useLongPress.default)(leavePress, onPress, onLongPress, onClick, defaultOptions);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, isMobile ? /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: '15%',
-      width: '100%',
-      position: 'fixed',
-      bottom: '0px',
-      zIndex: "5"
-    }
-  }, /*#__PURE__*/React.createElement(_BottomSideButton.default, {
-    elements: currentElements,
-    nodeRef: nodeRef,
-    dragHandlers: dragHandlers,
-    checked: checked,
-    currentElements: currentElements,
-    toggleChecked: toggleChecked,
-    message: message,
-    pos_x: pos_x,
-    pos_y: pos_y,
-    canITeleport: canITeleport,
-    logo: _pop.default,
-    feeling: feelings.getSmileValue()
-  })) : /*#__PURE__*/React.createElement("div", _extends({
-    style: {
-      height: '100%',
-      position: 'absolute',
-      left: '0px',
-      width: '100%',
-      overflow: 'hidden'
-    }
-  }, longPressEvent), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "fixed",
-      zIndex: "5"
-    }
-  }, /*#__PURE__*/React.createElement(DraggableElement, {
-    nodeRef: nodeRef,
-    dragHandlers: dragHandlers,
-    checked: checked,
-    currentElements: currentElements,
-    toggleChecked: toggleChecked,
-    message: message,
-    pos_x: pos_x,
-    pos_y: pos_y,
-    canITeleport: canITeleport,
-    logo: _pop.default,
-    feeling: feeling
-  }))));
+  const longPressEvent = (0, _useLongPress.useLongPress)(leavePress, onPress, onLongPress, onClick, defaultOptions);
+  return (0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
+    children: isMobile ? (0, _jsxRuntime.jsx)("div", {
+      style: {
+        height: '15%',
+        width: '100%',
+        position: 'fixed',
+        bottom: '0px',
+        zIndex: "5"
+      },
+      children: (0, _jsxRuntime.jsx)(_BottomSideButton.BottomSideButton, {
+        elements: currentElements,
+        nodeRef: nodeRef,
+        dragHandlers: dragHandlers,
+        checked: checked,
+        currentElements: currentElements,
+        toggleChecked: toggleChecked,
+        message: message,
+        pos_x: pos_x,
+        pos_y: pos_y,
+        canITeleport: canITeleport,
+        teleporteffect: teleporteffect,
+        feeling: feelings.getSmileValue()
+      })
+    }) : (0, _jsxRuntime.jsx)("div", _objectSpread(_objectSpread({
+      style: {
+        height: '100%',
+        position: 'absolute',
+        left: '0px',
+        width: '100%',
+        overflow: 'hidden'
+      }
+    }, longPressEvent), {}, {
+      children: (0, _jsxRuntime.jsx)("div", {
+        style: {
+          position: "fixed",
+          zIndex: "5"
+        },
+        children: (0, _jsxRuntime.jsx)(DraggableElement, {
+          nodeRef: nodeRef,
+          dragHandlers: dragHandlers,
+          checked: checked,
+          currentElements: currentElements,
+          toggleChecked: toggleChecked,
+          message: message,
+          pos_x: pos_x,
+          pos_y: pos_y,
+          canITeleport: canITeleport,
+          teleporteffect: teleporteffect,
+          feeling: feeling
+        })
+      })
+    }))
+  });
 };
+exports.MainButton = MainButton;
 const DraggableElement = _ref2 => {
   let {
     nodeRef,
@@ -229,7 +224,7 @@ const DraggableElement = _ref2 => {
     pos_x,
     pos_y,
     canITeleport,
-    logo,
+    teleporteffect,
     feeling
   } = _ref2;
   //console.log("DraggableElement ", pos_x, pos_y)
@@ -241,9 +236,9 @@ const DraggableElement = _ref2 => {
   } else if (checked && feeling === feelings.getSleepValue()) {
     feelings.smile();
   }
-  return /*#__PURE__*/React.createElement(_reactDraggable.default, _extends({
+  return (0, _jsxRuntime.jsx)(_reactDraggable.default, _objectSpread(_objectSpread({
     nodeRef: nodeRef
-  }, dragHandlers, {
+  }, dragHandlers), {}, {
     defaultPosition: {
       x: pos_x,
       y: pos_y
@@ -257,37 +252,47 @@ const DraggableElement = _ref2 => {
       y: -200
     } : null
     //className={styles.MainButton}
-  }), /*#__PURE__*/React.createElement("div", {
-    ref: nodeRef,
-    className: _mainButtonModule.default.MainButton
-  },
-  /*#__PURE__*/
-  //canITeleport ? <img className="pop" src={logo} alt="loading..." style={{ zIndex: "6" }}/> : 
-  React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: _mainButtonModule.default.defaultContainer
-  }, checked ? /*#__PURE__*/React.createElement(Elements, {
-    elements: currentElements
-  }) : null, /*#__PURE__*/React.createElement("div", {
-    className: _mainButtonModule.default.hardCodedButtonsContainer
-  }, /*#__PURE__*/React.createElement("button", {
-    className: _mainButtonModule.default.defaultIconButton,
-    checked: checked,
-    onClick: toggleChecked
-  }, feeling))), /*#__PURE__*/React.createElement("p", {
-    className: _mainButtonModule.default.messageContainer
-  }, message))));
+    ,
+    children: (0, _jsxRuntime.jsx)("div", {
+      ref: nodeRef,
+      css: styles.MainButton,
+      children:
+      //canITeleport ? <img className="pop" src={teleporteffect} alt="loading..." style={{ zIndex: "6" }}/> : 
+      (0, _jsxRuntime.jsxs)(_jsxRuntime.Fragment, {
+        children: [(0, _jsxRuntime.jsxs)("div", {
+          css: styles.DefaultContainer,
+          children: [checked ? (0, _jsxRuntime.jsx)(Elements, {
+            elements: currentElements
+          }) : null, (0, _jsxRuntime.jsx)("div", {
+            css: styles.HardCodedButtonsContainer,
+            children: (0, _jsxRuntime.jsx)("button", {
+              css: styles.DefaultIconButton,
+              checked: checked,
+              onClick: toggleChecked,
+              children: feeling
+            })
+          })]
+        }), (0, _jsxRuntime.jsx)("p", {
+          css: styles.MessageContainer,
+          children: message
+        })]
+      })
+    })
+  }));
 };
 const Elements = _ref3 => {
   let {
     elements
   } = _ref3;
   //console.log(elements)
-  return /*#__PURE__*/React.createElement("div", {
-    id: "buttons",
-    className: _mainButtonModule.default.showButtons
-  }, elements.map(element => {
-    return element;
-  }));
+  return (
+    // <div id="buttons" className={styles.showButtons}> LEGACY STYLE
+    (0, _jsxRuntime.jsx)("div", {
+      id: "buttons",
+      css: styles.ShowButtons,
+      children: elements.map(element => {
+        return element;
+      })
+    })
+  );
 };
-var _default = mainButon;
-exports.default = _default;

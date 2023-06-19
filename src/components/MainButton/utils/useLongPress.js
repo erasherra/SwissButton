@@ -74,4 +74,4 @@ if (event.touches.length < 2 && event.preventDefault) {
 }
 };
 
-export default useLongPress;
+export {useLongPress};
